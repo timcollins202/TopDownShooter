@@ -6,6 +6,9 @@ using TopDownShooter.Source.Engine.Input;
 
 namespace TopDownShooter.Source.Engine
 {
+    public delegate void PassObject(object i);
+    public delegate object PassObjectAndReturn(object i);
+
     public class Globals
     {
         public static int screenHeight;
@@ -16,6 +19,8 @@ namespace TopDownShooter.Source.Engine
 
         public static McKeyboard keyboard;
         public static McMouseControl mouse;
+
+        public static GameTime gameTime;
 
         public static float GetDistance(Vector2 pos, Vector2 target)
         {

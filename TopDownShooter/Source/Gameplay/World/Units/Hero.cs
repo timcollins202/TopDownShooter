@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using TopDownShooter.Source.Engine;
 
-namespace TopDownShooter.Source.Gameplay.World
+namespace TopDownShooter.Source.Gameplay.World.Units
 {
-    public class Hero : Basic2d
+    public class Hero : Unit
     {
         public float speed;
 
@@ -16,26 +16,31 @@ namespace TopDownShooter.Source.Gameplay.World
         {
             if(Globals.keyboard.GetPress("A"))
             {
-                _pos = new Vector2(_pos.X - speed, _pos.Y);
+                Pos = new Vector2(Pos.X - speed, Pos.Y);
             }
 
             if (Globals.keyboard.GetPress("D"))
             {
-                _pos = new Vector2(_pos.X + speed, _pos.Y);
+                Pos = new Vector2(Pos.X + speed, Pos.Y);
             }
 
             if (Globals.keyboard.GetPress("W"))
             {
-                _pos = new Vector2(_pos.X, _pos.Y - speed);
+                Pos = new Vector2(Pos.X, Pos.Y - speed);
             }
 
             if (Globals.keyboard.GetPress("S"))
             {
-                _pos = new Vector2(_pos.X, _pos.Y + speed);
+                Pos = new Vector2(Pos.X, Pos.Y + speed);
             }
 
             //Rotate the hero towards the mouse cursor
-            _rot = Globals.RotateTowards(_pos, new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y));
+            Rot = Globals.RotateTowards(Pos, new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y));
+
+            if (Globals.mouse.LeftClick())
+            {
+                GameGlobals.PassProjectile(new Fireball(new Vector2(Pos.X, Pos.Y), this, new Vector2(Globals.mouse.newMousePos.X, Globals.mouse.newMousePos.Y)));
+            }
 
             base.Update();
         }

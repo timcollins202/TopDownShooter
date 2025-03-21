@@ -7,7 +7,7 @@ using TopDownShooter.Source.Engine.Input;
 
 namespace TopDownShooter
 {
-    public class Game1 : Game
+    public class Main : Game
     {
         private GraphicsDeviceManager _graphics;
 
@@ -15,7 +15,7 @@ namespace TopDownShooter
 
         Basic2d _cursor;
 
-        public Game1()
+        public Main()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -25,6 +25,14 @@ namespace TopDownShooter
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            Globals.screenWidth = 800;
+            Globals.screenHeight = 500;
+
+            _graphics.PreferredBackBufferWidth = Globals.screenWidth;
+            _graphics.PreferredBackBufferHeight = Globals.screenHeight;
+
+            _graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -50,6 +58,7 @@ namespace TopDownShooter
                 Exit();
 
             // TODO: Add your update logic here
+            Globals.gameTime = gameTime;
             Globals.keyboard.Update();
             Globals.mouse.Update();
 
