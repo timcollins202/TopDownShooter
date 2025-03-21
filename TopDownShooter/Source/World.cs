@@ -1,25 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using TopDownShooter.Source.Engine;
+using TopDownShooter.Source.Gameplay.World;
 
 namespace TopDownShooter.Source
 {
     public class World
     {
-        public Basic2d Hero;
+        public Hero hero;
 
         public World()
         {
-            Hero = new Basic2d("2d\\Hero", new Vector2(300, 300), new Vector2(48, 48));
+            hero = new Hero("2d\\Hero", new Vector2(300, 300), new Vector2(48, 48));
         }
 
         public virtual void Update()
         {
-            Hero.Update();
+            hero.Update();
         }
 
         public virtual void Draw()
         {
-            Hero.Draw();
+            hero.Draw();
         }
 
     }

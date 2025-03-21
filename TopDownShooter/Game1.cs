@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TopDownShooter.Source;
 using TopDownShooter.Source.Engine;
+using TopDownShooter.Source.Engine.Input;
 
 namespace TopDownShooter
 {
@@ -30,6 +31,7 @@ namespace TopDownShooter
         {
             Globals.content = this.Content;
             Globals.spriteBatch = new SpriteBatch(GraphicsDevice);
+            Globals.keyboard = new McKeyboard();
 
             _world = new World();
 
@@ -42,8 +44,11 @@ namespace TopDownShooter
                 Exit();
 
             // TODO: Add your update logic here
+            Globals.keyboard.Update();
 
             _world.Update();
+
+            Globals.keyboard.UpdateOld();
 
             base.Update(gameTime);
         }
