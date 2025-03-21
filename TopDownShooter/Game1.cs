@@ -1,13 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TopDownShooter.Source;
+using TopDownShooter.Source.Engine;
 
 namespace TopDownShooter
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+
+        World _world;
 
         public Game1()
         {
@@ -25,7 +28,10 @@ namespace TopDownShooter
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Globals.content = this.Content;
+            Globals.spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            _world = new World();
 
             // TODO: use this.Content to load your game content here
         }
@@ -37,6 +43,8 @@ namespace TopDownShooter
 
             // TODO: Add your update logic here
 
+            _world.Update();
+
             base.Update(gameTime);
         }
 
@@ -45,6 +53,13 @@ namespace TopDownShooter
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            //Open the spriteBatch
+            Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+            _world.Draw();
+
+            //close the spriteBatch
+            Globals.spriteBatch.End();
 
             base.Draw(gameTime);
         }
