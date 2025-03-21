@@ -13,11 +13,13 @@ namespace TopDownShooter
 
         World _world;
 
+        Basic2d _cursor;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         protected override void Initialize()
@@ -31,7 +33,11 @@ namespace TopDownShooter
         {
             Globals.content = this.Content;
             Globals.spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            _cursor = new Basic2d("2d\\Misc\\CursorArrow", new Vector2(0,0), new Vector2(28, 28));
+
             Globals.keyboard = new McKeyboard();
+            Globals.mouse = new McMouseControl();
 
             _world = new World();
 
@@ -45,10 +51,12 @@ namespace TopDownShooter
 
             // TODO: Add your update logic here
             Globals.keyboard.Update();
+            Globals.mouse.Update();
 
             _world.Update();
 
             Globals.keyboard.UpdateOld();
+            Globals.mouse.UpdateOld();
 
             base.Update(gameTime);
         }
@@ -61,7 +69,8 @@ namespace TopDownShooter
             //Open the spriteBatch
             Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
-            _world.Draw();
+            _world.Draw(Vector2.Zero);
+            _cursor.Draw(new Vector2(Globals.mouse.newMousePos.X, Globals.mouse.newMousePos.Y), new Vector2(0, 0));
 
             //close the spriteBatch
             Globals.spriteBatch.End();

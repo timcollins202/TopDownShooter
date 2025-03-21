@@ -5,6 +5,7 @@ namespace TopDownShooter.Source.Engine
 {
     public class Basic2d
     {
+        public float _rot;
         public Vector2 _pos;
         public Vector2 _dims;
         public Texture2D myModel;
@@ -22,12 +23,22 @@ namespace TopDownShooter.Source.Engine
 
         }
 
-        public virtual void Draw()
+        public virtual void Draw(Vector2 offset)
         {
             if (myModel != null)
             {
-                Globals.spriteBatch.Draw(myModel, new Rectangle((int)_pos.X, (int)_pos.Y, (int)_dims.X, (int)_dims.Y),
-                    null, Color.White, 0.0f, new Vector2(myModel.Bounds.Width / 2, myModel.Bounds.Height / 2),
+                Globals.spriteBatch.Draw(myModel, new Rectangle((int)(_pos.X + offset.X), (int)(_pos.Y + offset.Y), (int)_dims.X, (int)_dims.Y),
+                    null, Color.White, _rot, new Vector2(myModel.Bounds.Width / 2, myModel.Bounds.Height / 2),
+                    new SpriteEffects(), 0);
+            }
+        }
+
+        public virtual void Draw( Vector2 offset, Vector2 origin)
+        {
+            if (myModel != null)
+            {
+                Globals.spriteBatch.Draw(myModel, new Rectangle((int)(_pos.X + offset.X), (int)(_pos.Y + offset.Y), (int)_dims.X, (int)_dims.Y),
+                    null, Color.White, _rot, new Vector2(origin.X, origin.Y),
                     new SpriteEffects(), 0);
             }
         }
