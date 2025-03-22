@@ -17,8 +17,7 @@ namespace TopDownShooter.Source.Gameplay.World
         }
 
         public override void Update(Vector2 offset)
-        {
-            
+        {            
             base.Update(offset);
         }
 

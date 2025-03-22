@@ -12,32 +12,43 @@ namespace TopDownShooter.Source.Gameplay.World.Units
 
         public override void Update(Vector2 offset)
         {
+            bool checkScroll = false;
+
             if(Globals.keyboard.GetPress("A"))
             {
                 Pos = new Vector2(Pos.X - speed, Pos.Y);
+                checkScroll = true;
             }
 
             if (Globals.keyboard.GetPress("D"))
             {
                 Pos = new Vector2(Pos.X + speed, Pos.Y);
+                checkScroll = true;
             }
 
             if (Globals.keyboard.GetPress("W"))
             {
                 Pos = new Vector2(Pos.X, Pos.Y - speed);
+                checkScroll = true;
             }
-
+            
             if (Globals.keyboard.GetPress("S"))
             {
                 Pos = new Vector2(Pos.X, Pos.Y + speed);
+                checkScroll = true;
+            }
+
+            if (checkScroll)
+            {
+                GameGlobals.CheckScroll(Pos);
             }
 
             //Rotate the hero towards the mouse cursor
-            Rot = Globals.RotateTowards(Pos, new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y));
+            Rot = Globals.RotateTowards(Pos, new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y) - offset);
 
             if (Globals.mouse.LeftClick())
             {
-                GameGlobals.PassProjectile(new Fireball(new Vector2(Pos.X, Pos.Y), this, new Vector2(Globals.mouse.newMousePos.X, Globals.mouse.newMousePos.Y)));
+                GameGlobals.PassProjectile(new Fireball(new Vector2(Pos.X, Pos.Y), this, new Vector2(Globals.mouse.newMousePos.X, Globals.mouse.newMousePos.Y) - offset));
             }
 
             base.Update(offset);

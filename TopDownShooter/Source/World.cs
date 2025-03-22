@@ -20,6 +20,7 @@ namespace TopDownShooter.Source
 
         public World()
         {
+            GameGlobals.CheckScroll = CheckScroll;
             GameGlobals.PassProjectile = AddProjectile;
             GameGlobals.PassMob = AddMob;
 
@@ -91,7 +92,32 @@ namespace TopDownShooter.Source
             projectiles.Add((Projectile2d)info);
         }
 
-        public virtual void Draw(Vector2 offset)
+        public virtual void CheckScroll(object info)
+        {
+            Vector2 tempPos = (Vector2)info;
+
+            if (tempPos.X < -offset.X + Globals.screenWidth * 0.4f)
+            {
+                offset = new Vector2(offset.X + hero.speed * 2, offset.Y);
+            }
+
+            if (tempPos.X > offset.X + Globals.screenWidth * 0.6f)
+            {
+                offset = new Vector2(offset.X - hero.speed * 2, offset.Y);
+            }
+
+            if (tempPos.Y < -offset.Y + Globals.screenHeight * 0.4f)
+            {
+                offset = new Vector2(offset.X, offset.Y + hero.speed * 2);
+            }
+
+            if (tempPos.Y > offset.Y + Globals.screenHeight * 0.6f)
+            {
+                offset = new Vector2(offset.X, offset.Y - hero.speed * 2);
+            }
+        }
+
+        public virtual void Draw(Vector2 OFFSET)
         {
             hero.Draw(offset);
 
